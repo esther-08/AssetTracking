@@ -11,14 +11,14 @@ namespace AssetTracking
         {
             // Level 1
             List<CompanyAsset> myAssets= new List<CompanyAsset>();
-            LaptopComputer pc1 = new LaptopComputer("MacBook",  11000, new DateTime(2018, 12, 12), "Finland");
-            LaptopComputer pc2 = new LaptopComputer("Asus", 10000, new DateTime(2018, 1, 12), "Sweden");
-            LaptopComputer pc3 = new LaptopComputer("Lenovo", 8000, new DateTime(2019, 12, 12), "USA");
+            LaptopComputer pc1 = new LaptopComputer("MacBook",  3341, new DateTime(2018, 12, 12), "Uganda");
+            LaptopComputer pc2 = new LaptopComputer("Asus", 2950, new DateTime(2018, 1, 12), "Sweden");
+            LaptopComputer pc3 = new LaptopComputer("Lenovo", 999, new DateTime(2019, 12, 12), "USA");
 
             List<MobilePhone> myPhones = new List<MobilePhone>();
-            MobilePhone phone1 = new MobilePhone("Iphone", 9000, new DateTime(2011, 12, 12), "Finland");
-            MobilePhone phone2 = new MobilePhone("Samsung", 7000, new DateTime(2018, 3, 12), "USA");
-            MobilePhone phone3 = new MobilePhone("Nokia", 2000, new DateTime(2018, 4, 12), "Sweden");
+            MobilePhone phone1 = new MobilePhone("Iphone", 1099, new DateTime(2011, 12, 12), "Uganda");
+            MobilePhone phone2 = new MobilePhone("Samsung", 1299, new DateTime(2018, 3, 12), "USA");
+            MobilePhone phone3 = new MobilePhone("Nokia", 699, new DateTime(2018, 4, 12), "Sweden");
 
             myAssets.Add(pc1);
             myAssets.Add(phone1);
@@ -60,11 +60,30 @@ namespace AssetTracking
 
             Console.WriteLine("\nLEVEL3 \nOrder by Office");
             Console.WriteLine("ModelName    Price   PurchaseDate");
+            CultureInfo cultureInfo = new CultureInfo("en-US");
+            string price;
             foreach (CompanyAsset asset in myAssets)
             {
                 assetLifeSpan = nowDate - asset.PurchaseDate;
+
+                if (asset.Office == "Sweden")
+                {
+                    // Convert dollars to SEK first
+                    price = (asset.Price * 8.23).ToString("C", CultureInfo.CreateSpecificCulture("sv-SE"));
+                }
+                 else if (asset.Office == "Uganda")
+                {
+                    // Convert dollars to Ugx first
+                    price = (asset.Price * 3700).ToString("C", CultureInfo.CreateSpecificCulture("en-UG"));
+                }
+                else 
+                {
+                    // Default price in dollars
+                    price = asset.Price.ToString("C", CultureInfo.CreateSpecificCulture("en-US"));
+                }
+
                 ColorConsole(assetLifeSpan);
-                Console.WriteLine(asset.ModelName + "  " + asset.Price.ToString() + "  " + asset.PurchaseDate + "  " + asset.Office);
+                Console.WriteLine(asset.ModelName + "  " + price + "  " + asset.PurchaseDate + "  " + asset.Office);
             }
 
             Console.ReadLine();
@@ -105,7 +124,7 @@ namespace AssetTracking
         public MobilePhone(string modelName, int price, DateTime purchaseDate, string office) : base(modelName, price, purchaseDate, office)
         {
             ModelName = modelName;
-            Price = price;
+            Price = price; // in dollars
             PurchaseDate = purchaseDate;
         }
     }
