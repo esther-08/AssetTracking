@@ -35,33 +35,40 @@ namespace AssetTracking
             Console.WriteLine("ModelName    Price   PurchaseDate");
             foreach (CompanyAsset asset in myAssets)
             {
-                Console.WriteLine(asset.ModelName + "  " + asset.Price.ToString() + "  " + asset.PurchaseDate);
+                Console.WriteLine(asset.ModelName + "  " + asset.Price.ToString() + "  " + asset.PurchaseDate + "  " + asset.Office);
             }
 
             myAssets = myAssets.OrderBy(myAssets => myAssets.PurchaseDate).ToList();
 
-            Console.WriteLine("\nOrder by PurchaseDate");
+            Console.WriteLine("\nOrder by Purchase Date");
             Console.WriteLine("ModelName    Price   PurchaseDate");
             DateTime nowDate = DateTime.Now;
             TimeSpan assetLifeSpan;
-            // 1005 is 2 years and 9 months  = (365*3)-(30*3) days
-            TimeSpan soonEoLSpan = new TimeSpan(1005, 0, 0, 0, 0);
+
             foreach (CompanyAsset asset in myAssets)
             {
                 assetLifeSpan = nowDate - asset.PurchaseDate;
-                if (assetLifeSpan > soonEoLSpan)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.White;
-                }
-                Console.WriteLine(asset.ModelName + "  " + asset.Price.ToString() + "  " + asset.PurchaseDate);               
+                ColorConsole(assetLifeSpan);
+
+                Console.WriteLine(asset.ModelName + "  " + asset.Price.ToString() + "  " + asset.PurchaseDate + "  " + asset.Office);               
 
             }
 
             Console.ReadLine();
+        }
+
+        static void ColorConsole(TimeSpan assetLifeSpan) 
+        {
+            // 1005 is 2 years and 9 months  = (365*3)-(30*3) days
+            TimeSpan soonEoLSpan3 = new TimeSpan(1005, 0, 0, 0, 0);
+            if (assetLifeSpan > soonEoLSpan3)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+            }
         }
     }
     class LaptopComputer: CompanyAsset
