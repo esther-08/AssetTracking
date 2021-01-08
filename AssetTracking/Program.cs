@@ -54,6 +54,19 @@ namespace AssetTracking
 
             }
 
+            // Level 3
+            myAssets = myAssets.OrderBy(myAssets => myAssets.Office).ToList();
+            TimeSpan soonEoLSpan6 = new TimeSpan(1005, 0, 0, 0, 0);
+
+            Console.WriteLine("\nLEVEL3 \nOrder by Office");
+            Console.WriteLine("ModelName    Price   PurchaseDate");
+            foreach (CompanyAsset asset in myAssets)
+            {
+                assetLifeSpan = nowDate - asset.PurchaseDate;
+                ColorConsole(assetLifeSpan);
+                Console.WriteLine(asset.ModelName + "  " + asset.Price.ToString() + "  " + asset.PurchaseDate + "  " + asset.Office);
+            }
+
             Console.ReadLine();
         }
 
@@ -61,9 +74,15 @@ namespace AssetTracking
         {
             // 1005 is 2 years and 9 months  = (365*3)-(30*3) days
             TimeSpan soonEoLSpan3 = new TimeSpan(1005, 0, 0, 0, 0);
+            // 915 is 2 years and 6 months  = (365*3)-(30*6) days
+            TimeSpan soonEoLSpan6 = new TimeSpan(915, 0, 0, 0, 0);
             if (assetLifeSpan > soonEoLSpan3)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
+            }
+            else if (assetLifeSpan > soonEoLSpan6)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
             }
             else
             {
