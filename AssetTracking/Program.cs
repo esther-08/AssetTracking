@@ -32,16 +32,16 @@ namespace AssetTracking
             myAssets = myAssets.OrderBy(myAssets => myAssets.GetType().ToString()).ToList();
 
             Console.WriteLine("\nLEVEL2 \nOrder by Type");
-            Console.WriteLine("ModelName    Price   PurchaseDate");
+            Console.WriteLine("ModelName   Price  PurchaseDate Location");
             foreach (CompanyAsset asset in myAssets)
             {
-                Console.WriteLine(asset.ModelName + "  " + asset.Price.ToString() + "  " + asset.PurchaseDate + "  " + asset.Office);
+                Console.WriteLine(asset.ModelName.PadRight(10) + asset.Price.ToString().PadLeft(7) + "  " + asset.PurchaseDate.ToString("MM/dd/yyyy").PadRight(10) + "   " + asset.Office.PadRight(10));
             }
 
             myAssets = myAssets.OrderBy(myAssets => myAssets.PurchaseDate).ToList();
 
             Console.WriteLine("\nOrder by Purchase Date");
-            Console.WriteLine("ModelName    Price   PurchaseDate");
+            Console.WriteLine("ModelName   Price  PurchaseDate Location");
             DateTime nowDate = DateTime.Now;
             TimeSpan assetLifeSpan;
 
@@ -49,9 +49,7 @@ namespace AssetTracking
             {
                 assetLifeSpan = nowDate - asset.PurchaseDate;
                 ColorConsole(assetLifeSpan);
-
-                Console.WriteLine(asset.ModelName + "  " + asset.Price.ToString() + "  " + asset.PurchaseDate + "  " + asset.Office);               
-
+                Console.WriteLine(asset.ModelName.PadRight(10) + asset.Price.ToString().PadLeft(7) + "  " + asset.PurchaseDate.ToString("MM/dd/yyyy").PadRight(10) + "   " + asset.Office.PadRight(10));
             }
 
             // Level 3
@@ -59,7 +57,7 @@ namespace AssetTracking
             TimeSpan soonEoLSpan6 = new TimeSpan(1005, 0, 0, 0, 0);
 
             Console.WriteLine("\nLEVEL3 \nOrder by Office");
-            Console.WriteLine("ModelName    Price   PurchaseDate");
+            Console.WriteLine("ModelName        Price     PurchaseDate Location");
             CultureInfo cultureInfo = new CultureInfo("en-US");
             string price;
             foreach (CompanyAsset asset in myAssets)
@@ -83,7 +81,7 @@ namespace AssetTracking
                 }
 
                 ColorConsole(assetLifeSpan);
-                Console.WriteLine(asset.ModelName + "  " + price + "  " + asset.PurchaseDate + "  " + asset.Office);
+                Console.WriteLine(asset.ModelName.PadRight(10) + price.PadLeft(15) + "  " + asset.PurchaseDate.ToString("MM/dd/yyyy").PadRight(10) + "   " + asset.Office.PadRight(10));
             }
 
             Console.ReadLine();
